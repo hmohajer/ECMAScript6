@@ -39,5 +39,17 @@ let salaries = {
     Ted: 100,
     Ghaith: 130
 }
-
+// let {Fred = 0, Ted = 0, Ghaith = 0} = salaries;
+// console.log(Fred+Ted+Ghaith);
+console.log(Object.values(salaries));
+console.log(Object.keys(salaries));
+//-------------
+let a = 2, b = 1;
+let result = a + b < 4 ? "Below" : "Over";
+console.log(result);
+//-------------
+let message = "";
+let login = "";
+result = login == "Employee" ? 'Hello' : (login == "Director" ? "Greetings" : (login == "" ? "No login" : ""))
+console.log(result);
 //-------------

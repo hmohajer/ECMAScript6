@@ -12,7 +12,6 @@
 $(function () {
     const equal = $("#equalBtn");
     const result = $("#result");
-    // const result = $("#result");
     const expression = $("#statment");
     const expression1 = $("#statment1");
 
@@ -59,8 +58,6 @@ function calculate(str = "2+2/5-8*31") {
     let numbers = str.split(/[\-*/+]/).map(parseFloat);
     let arr = str.split("");
     let operators = arr.filter(x => operatorList.some(y => y == x));
-    // console.log(numbers);
-    // console.log(operators);
 
     let index = operators.findIndex(x => x === "/" || x === "*");
     // console.log(index);
@@ -95,6 +92,4 @@ function calc(num1, num2, op) {
         return num1 / num2;
     }
 }
-// console.log(calculate("1-5+10+2"));
-// console.log(cal(4,5,"-"));
 

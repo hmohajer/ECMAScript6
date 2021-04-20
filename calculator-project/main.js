@@ -14,40 +14,45 @@ $(function () {
     const result = $("#result");
     const expression = $("#statment");
     const expression1 = $("#statment1");
+    let canOperator = false;
 
-
-    $(".btn").on("click", function () {
-        // console.log(this.textContent);
+    $(".btn-outline-secondary").on("click", function () {
         expression.val(expression.val() + this.textContent);
+        canOperator = true;
+    });
+
+    $(".btn-dark").on("click", function () {
+        if(canOperator){
+            expression.val(expression.val() + this.textContent);
+            canOperator = false;
+        }
     });
 
     equal.on("click", () => {
-        // calculate(expression);
         let value = expression.val();
-        if(value !== "="){
-        result.text(calculate(value));
-        expression1.text(value);
-    }
-    expression.val("");
+        if (value !== "") {
+            result.text(calculate(value));
+            expression1.text(value+"=");
+        }
+        expression.val("");
+        canOperator = false;
     });
 
     $("#clearBtn").on("click", function () {
-        console.log(this.textContent);
         expression1.text("");
         expression.val("");
         result.text(0);
+        canOperator = false;
     });
 
     //preventing from invalid input
-    expression.bind("input", function () {
-        let c = this.selectionStart,
-            r = /[^0-9\-/*+.]/,
-            v = $(this).val();
-        if (r.test(v)) {
-            $(this).val(v.replace(r, ''));
-            c--;
+    expression.on("change paste input", function () {
+        let notAllowedChar = /[^0-9\-/*+.]/;
+        let inputValue = $(this).val();
+        while (notAllowedChar.test(inputValue)) {
+            inputValue = inputValue.replace(notAllowedChar, '');
         }
-        this.setSelectionRange(c, c);
+        $(this).val(inputValue);
     });
 
 });

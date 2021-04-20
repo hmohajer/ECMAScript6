@@ -30,11 +30,14 @@ $(function () {
 
     equal.on("click", () => {
         let value = expression.val();
-        if (value !== "") {
+        let opChar = /[\-/*+.]/;
+        if (opChar.test(value[value.length-1])) {
+            //do nothing
+        }else if (value !== "") {
             result.text(calculate(value));
             expression1.text(value+"=");
+            expression.val("");
         }
-        expression.val("");
         canOperator = false;
     });
 
@@ -48,10 +51,24 @@ $(function () {
     //preventing from invalid input
     expression.on("change paste input", function () {
         let notAllowedChar = /[^0-9\-/*+.]/;
+        let opChar = /[\-/*+.]/;
         let inputValue = $(this).val();
         while (notAllowedChar.test(inputValue)) {
             inputValue = inputValue.replace(notAllowedChar, '');
         }
+
+        //making sure that there is one operator between numbers
+        if (!opChar.test(inputValue[inputValue.length-1])) {
+            // if its a number you can type operator next time
+            canOperator = true;
+        }else if (canOperator) {
+            // if its a operator you can not type operator next time
+            canOperator = false;
+        }else{
+            // if its a operator it will be deleted
+            inputValue = inputValue.slice(0, inputValue.length-1);
+        }
+        
         $(this).val(inputValue);
     });
 
